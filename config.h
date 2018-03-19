@@ -145,6 +145,24 @@
     #define USB_DISC_BANK         GPIOB
     #define USB_DISC_PIN              9
 
+#elif defined TARGET_OLIMEXINO_STM32
+
+	// the OLIMEXINO-STM32 has the Maple disconnect hardware
+    #define HAS_MAPLE_HARDWARE 1
+
+	// PA5 is the green LED
+    #define LED_BANK         GPIOA
+    #define LED_PIN          5
+    #define LED_ON_STATE     0
+
+    // there is a button is on PC9 (also BOOT1)
+    #define BUTTON_BANK      GPIOC
+    #define BUTTON_PIN       9
+
+    /* USB Disc Pin Setup.   USB DISC is PC12 */
+    #define USB_DISC_BANK    GPIOC
+    #define USB_DISC_PIN     12
+
 #elif defined TARGET_GENERIC_F103_PC13
 
     #define LED_BANK            GPIOC

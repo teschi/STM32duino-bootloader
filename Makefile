@@ -116,6 +116,7 @@ all: begin gccversion build sizeafter finished end
 maple-mini: begin clean gccversion build_maple-mini sizeafter finished  copy_maple_mini end
 maple-rev3: begin clean gccversion build_maple-rev3 sizeafter finished  copy_maple-rev3 end
 maple-rev5: begin clean gccversion build_maple-rev5 sizeafter finished  copy_maple-rev5 end
+olimexino-stm32: begin clean gccversion build_olimexino-stm32 sizeafter finished  copy_olimexino-stm32 end
 generic-pc13: begin clean gccversion build_generic-pc13 sizeafter finished  copy_generic-pc13 end
 generic-pg15: begin clean gccversion build_generic-pg15 sizeafter finished  copy_generic-pg15 end
 generic-pd2: begin clean gccversion build_generic-pd2 sizeafter finished  copy_generic-pd2 end
@@ -173,6 +174,17 @@ copy_maple-rev5:
 	cp $(TARGET).bin bootloader_only_binaries/maple_rev5_boot20.bin
 	@echo
 
+
+build_olimexino-stm32: TARGETFLAGS= -DTARGET_OLIMEXINO_STM32
+# Set the linker script
+build_olimexino-stm32: LDFLAGS +=-T$(ST_LIB)/c_only_md_high_density.ld
+build_olimexino-stm32: elf bin lss sym
+copy_olimexino-stm32:
+	@echo
+	@echo "Copying to binaries folder"
+	@echo
+	cp $(TARGET).bin bootloader_only_binaries/olimexino_stm32_boot20.bin
+	@echo
 
 build_generic-pc13: TARGETFLAGS= -DTARGET_GENERIC_F103_PC13
 # Set the linker script
