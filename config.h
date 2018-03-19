@@ -385,7 +385,7 @@
 #ifdef BUTTON_BANK
     #define BOOTLOADER_WAIT 6
 #else
-    #define BOOTLOADER_WAIT 30
+    #define BOOTLOADER_WAIT 50
 #endif
 #endif
 

@@ -35,10 +35,27 @@
 #include "dfu.h"
 extern volatile dfuUploadTypes_t userUploadType;
 
+#define RCC_CSR_PINRSTF         0x04000000
+#define RCC_CSR_PORRSTF         0x08000000
+#define RCC_CSR_SFTRSTF         0x10000000
+#define RCC_CSR_IWDGRSTF        0x20000000
+#define RCC_CSR_WWDGRSTF        0x40000000
+#define RCC_CSR_LPWRRSTF        0x80000000
+
 int main()
 {
     bool no_user_jump = FALSE;
     bool dont_wait=FALSE;
+
+    // in case we the reset reasons are: POR, IWDG or WWDG, we don't wait and immediately jump into the software
+    u32 reset_flags = pRCC->CSR;
+    if (reset_flags == (RCC_CSR_PINRSTF | RCC_CSR_PORRSTF)
+    		|| reset_flags == (RCC_CSR_PINRSTF | RCC_CSR_IWDGRSTF)
+			|| reset_flags == (RCC_CSR_PINRSTF | RCC_CSR_WWDGRSTF))
+    {
+    	dont_wait = TRUE;
+    }
+
 
     systemReset(); // peripherals but not PC
     setupCLK();
