@@ -1,5 +1,18 @@
 # STM32duino-bootloader
 
+---------------
+Modification in this fork:
+ * support for the "OLIMEXINO-STM32", (an F103 Board similar to Maple-v5)
+ * make the bootloader aware of reset-flags so that we will **NOT** wait for a firmware upload if:
+   * reset-reason is power-ON (POR)
+   * reset-reason is a watchdog-reset (either IWDG or WWDG)
+ * if we detect such a reset-flag, we immediately jump into software without waiting
+   * Note: the reset-flags needs to be cleared by the running software, not the bootloader  
+     (the software might want to know why we had a reset)
+ * also slightly increased the wait time.
+---------------
+ 
+
 Please Note. This code does not work with all STM32F103 Boards
 
 Also Note. Use GCC 4.8 (not 4.9 or newer, as these versions have more aggressive optimisation which causes hardware registers not be read correctly and consequently the bootloader does not work)
